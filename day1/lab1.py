@@ -49,11 +49,11 @@ def base_to_int(string, base):
   result = 0 
   string = list(string)
   result = 0
-  for i in range(0, len(string) + 1):
-	result = result + string[i]*(base**len(string)-i)
+  for i in range(0, len(string)):
+	result = result + int(string[i])*(base**(len(string)-i-1))
   return result 
   
-base_to_int(101, 7)
+print base_to_int('101', 7)
 
 def flexibase_add(str1, str2, base1, base2):
   """add two numbers of different bases and return the sum"""
