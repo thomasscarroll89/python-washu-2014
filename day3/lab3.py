@@ -1,48 +1,67 @@
 def shout(txt):
   new_txt = txt.upper()
-  new_txt = new_txt.replace(". ", "!")
-  if new_txt[len(new_txt) - 1] != ".":
+  new_txt = new_txt.replace(".", "!") #the string had an extra space after the period symbol
+  new_txt = new_txt.replace("?", "?!")
+  if (new_txt[len(new_txt) - 1] != "." and new_txt[len(new_txt) - 1] != "!"):
     new_txt = new_txt + "!"
-  new_txt = new_txt.replace("?", "!")
   return new_txt
   
 def reverse(txt):
   if isinstance(txt, str) == False:
     return ""
       
-  return txt[1::-1]
+  return txt[::-1]
   
 def reversewords(txt):
-  if isinstance(txt, str) == False:
-    return ""
+	if isinstance(txt, str) == False:
+		return ""
   
-  new_text = ""
-  reversed_sentences = []
+	new_text = ""
+	reversed_sentences = []
     
-  tmp = txt.replace("?", ".")
-  tmp = tmp.replace("!", ".")
-  sentences = tmp.split(". ")
-  sentences = [s.strip() for s in sentences if len(s.strip()) > 0]
+	tmp = txt.replace("?", " ?")
+	tmp = tmp.replace("!", " !")
+	words = tmp.split(" ")
+	punctuation_list = []
+	for i in range(len(words)):
+		if words[i] == ".":
+			punctuation_list.append(1)
+		elif words[i] == "!":
+			punctuation_list.append(2)
+		elif words[i] == "?":
+			punctuation_list.append(3)
+		else:
+			pass
+	
+	tmp = tmp.replace("?", ".")
+	tmp = tmp.replace("!", ".")	
+	sentences = tmp.split(".")
+	
+	#The strip function takes out its first argument from a string; if no argument is given it defaults to whitespace
+	sentences = [s.strip() for s in sentences if len(s.strip()) > 0]
   
-  last_sentence = sentences[len(sentences) - 1]
-  if last_sentence[len(last_sentence) - 1] == ".":
-    sentences[len(sentences) - 1] = last_sentence[0:len(last_sentence)-1]
+	last_sentence = sentences[len(sentences) - 1]
+	if last_sentence[len(last_sentence) - 1] == ".": #if the last element of the last sentence is a period...
+		sentences[len(sentences) - 1] = last_sentence[0:len(last_sentence)-1] #then drop the period from the last sentence. 
   
-  for sentence in sentences:
-    words = sentence.split()
-    words.reverse()
-    reversed_sentence = ""
-    for word in words:
-      reversed_sentence += word
-      reversed_sentence += " "
-    reversed_sentences.append(reversed_sentence[0:(len(reversed_sentence)-1)])
-  
-  for sentence in reversed_sentences:
-    if len(sentence) > 0:
-      new_text += sentence
-      new_text += ". "
+	for sentence in sentences:
+		words = sentence.split()
+		words.reverse()
+		reversed_sentence = ""
+		
+	for word in words:
+		reversed_sentence += word
+		reversed_sentence += " "
     
-  return new_text
+	if sentence == sentences[len(sentences)-1]:
+		reversed_sentences.append(reversed_sentence[0:(len(reversed_sentence)-1)]) #the -1 drops the empty space at the end of the sentence.
+		
+	for sentence in reversed_sentences:
+		if len(sentence) > 0:
+			new_text += "."
+			new_text += sentence
+    #we need to add in the right punctuation, and put punctuation in the right order
+	return new_text
   
 def reversewordletters(txt):
   if isinstance(txt, str) == False:
@@ -77,3 +96,5 @@ def piglatin(txt):
     return "igpe atinle"
     
   raise NotImplementedError("Didn't quite finish this one....")
+  
+reversewords("Hello world. How are you today. I am doing well. Thanks.")
