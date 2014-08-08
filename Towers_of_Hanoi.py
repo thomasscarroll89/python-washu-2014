@@ -14,7 +14,7 @@ def Towers_of_Hanoi(start=None, goal=None, available=None):
 	if start != []:
 		return Towers_of_Hanoi(start=start, goal=available, available=goal)	
 	
-#print Towers_of_Hanoi(start=[1])
+print Towers_of_Hanoi(start=[1])
 print Towers_of_Hanoi(start=[1, 2])
 print Towers_of_Hanoi(start=[1, 2, 3])
 print Towers_of_Hanoi(start=[1, 2, 3, 4])

@@ -39,7 +39,7 @@ class SchoolTest(unittest.TestCase):
         self.school.add("Christopher", 4)
         self.school.add("Kyle", 3)
         sorted_students = {
-            3: ("Kyle",),
+            3: ("Kyle",),										#For some reason this test includes an extra comma at the end of each dictionary value. The values are also now in parentheses, not sets. 
             4: ("Christopher", "Jennifer",),
             6: ("Kareem",)
         }
