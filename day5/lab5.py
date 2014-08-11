@@ -135,7 +135,7 @@ def findShortestPath(graph, start, end, path=[]):
 	if path == []:
 		initial_path = findPath(graph=graph, start=start, end=end, path=[])
 		length_initial_path = len(initial_path)
-	new_path = [start]
+	new_path = path + [start]
 	# if type(start)=="Actor":
 		# potential_moves = graph[start] #we want potential moves to be a function of whichever node we are currently on, which is indexed by the last element of start
 	# else:
