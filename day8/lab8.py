@@ -1,3 +1,9 @@
+import sqlalchemy
+
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey, and_, or_
+from sqlalchemy.orm import relationship, backref, sessionmaker
+
 engine = sqlalchemy.create_engine('sqlite:///geog.db', echo=False)
 
 Base = declarative_base() 
@@ -96,8 +102,21 @@ reg2.departments.append(dept4)
 session.add_all([dept1, dept2, dept3, dept4])
 
 # TODO: Create towns, nested in departments
+a = Town("A", 110000)
+b = Town("B", 80000)
+c = Town("C", 300000)
+d = Town("D", 50000)
+e = Town("E", 113000)
+f = Town("F", 70000)
 
 session.add_all([a,b,c,d,e,f])
+
+dept1.towns.append(a)
+dept1.towns.append(f)
+dept2.towns.append(d)
+dept2.towns.append(e)
+dept3.towns.append(b)
+dept3.towns.append(c)
 
 ae = Distance(50)
 ae.td, ae.ta = a, e 
@@ -137,14 +156,29 @@ fa.td, fa.ta = f, a
 
 session.add_all([ae, af, bc, bd, cb, db, de, ea, eb, ed, ef, fa])
 
-session.commit()
 
 # Some example querying 
-for town in session.query(Town).order_by(Town.id):
-  print town.name, town.population
+#for town in session.query(Town).order_by(Town.id):
+#  print town.name, town.population
 
 # TODO: 
 # 1. Display, by department, the cities having more than 100000 inhabitants.
+for town in session.query(Town).join(Department).filter(Town.population>100000).order_by(Town.dept_id):
+  print town.dept_id, town.name, town.population
+ 
+ 
+  
 # 2. Display the list of all the one-way connections between two cities for which the population of one of the 2 cities is lower than 80000 inhabitants. 
+#for connections in session.query(Distance, Town).filter(Town.population>80000):
+#	print Distance.td, Distance.ta, Distance.distance
+for connections in session.query(Distance):
+	print Distance.ta
 # 3. Display the number of inhabitants per department (bonus: do it per region as well). 
 # hint: use func.sum
+
+#session.executescript("DROP Table if exists Town")
+#session.executescript("DROP Table if exists Department")
+#session.executescript("DROP Table if exists Distance")
+#session.rollback()
+#session.commit()
+session.close()

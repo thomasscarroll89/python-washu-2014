@@ -9,8 +9,8 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 print sqlalchemy.__version__
 
 #Connect to the local database, can use :memory: to just try it out in memory
-engine = sqlalchemy.create_engine('sqlite:////Users/mcdickenson/inclass.db', echo=True)
-
+engine = sqlalchemy.create_engine('sqlite:////Users/Thomas/inclass.db', echo=True)
+#engine = sqlalchemy.create_engine(':memory:', echo=True)
 Base = declarative_base() 
 
 #Define some schemas
@@ -138,3 +138,8 @@ other_plumlee.name = "Marshall Plumlee"
 session.dirty
 session.commit()
 
+#How to convert tables to csv
+players = session.query(Player).all()
+for player in players:
+	print player.name, player.number. player.team #And instead of printing, write csv like we've done before
+	

@@ -1,6 +1,6 @@
 # Scraper to collect petition info from petitions.whitehouse.gov
 
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup #or from bs4
 import csv 
 from nltk.util import clean_html
 import urllib2 
@@ -24,7 +24,7 @@ webpage = urllib2.urlopen(page_to_scrape)
 soup = BeautifulSoup(webpage.read())
 soup.prettify()
 
-# Extract petitions on page
+#Extract petitions on page
 #petitions = soup.findAll("a", href=re.compile('^/petition'))
 petitions = soup.findAll("div", attrs={'class':'title'})
 print len(petitions)

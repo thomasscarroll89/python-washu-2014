@@ -25,6 +25,7 @@ classifier.classify(gender_features('Max'))
 classifier.classify(gender_features('Lucy'))
 
 # Check the overall accuracy
+print nltk.classify.accuracy(classifier, train_set)
 print nltk.classify.accuracy(classifier, test_set)
 
 # Lets see what is driving this

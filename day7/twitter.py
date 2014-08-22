@@ -4,8 +4,8 @@
 import tweepy
 
 #First parameter is Consumer Key, second is Consumer Secret 
-auth = tweepy.OAuthHandler('your consumer key', '')
-auth.set_access_token('your consumer secret', '')    
+auth = tweepy.OAuthHandler('jooBNWU5FQzoGWkswSD7ceJoV', 'fiG18cYY8892BBM1xpLibXtX0gp4SGx1nhP4C8tp6lZMDYp65I')
+auth.set_access_token('2745400866-0v7E4PswPJo8TCmWG13KjLNW9rvy9rN9V8zQZqX', 'GY1DOlnPR84prNyOhRM9ysHlkdUcEwn8WUbYzCfKrKKrN')    
 api = tweepy.API(auth)
 
 #See rate limit
