@@ -21,31 +21,33 @@ webpage = urllib2.urlopen(page_to_scrape)
 soup = BeautifulSoup(webpage.read())
 soup.prettify()
 
-#petitions = soup.findAll("a", href=re.compile('^/petition'))
 Articles = soup.findAll("div", attrs={'class':'hnews hentry item'})
-titles = []
-for title in Articles:
-  titles.append(clean_html(str(title.find("h2"))))
 
-date = []
-for date in Articles:
-	date.append(clean_html(str(title.find("timestamp"))))
-
-print Articles
-#print titles
-#print date
-
-# signatures = soup.findAll("div", attrs={'class':'num-sig'})
-# print len(signatures)
-# for signature in signatures:
-  # s = clean_html(str(signature.find("span", attrs={'class':'num'})))
-  # print s
-
-# for i in range(20):
-  # petition = petitions[i]
-  # p = clean_html(str(petition.find("a")))
-  # signature = signatures[i]
-  # s = clean_html(str(signature.find("span", attrs={'class':'num'})))
-  # csvwriter.writerow([p, s])
-
+for article in Articles:
+	observation = []
+	for item in article.findAll("span", {"id": True}): #Determine if post
+		if item["id"] == "mainentry":
+			observation.append(1)
+		else:
+			observation.append(0)
+	observation.append(clean_html(str(article.find("span", attrs={"class": "timestamp"})))) #Post date
+	observation.append(clean_html(str(article.find("span", attrs={"class": "author vcard"})))) #Authors
+	
+	past_urls = []
+	for item in article.fetch("a"): #URL
+		temp_url = item["href"]
+		if temp_url[-10:] == "/#comments":
+			continue
+		elif temp_url[0:7] != "http://":
+			continue
+		elif str(temp_url) in past_urls:
+			continue
+		else:
+			observation.append(str(temp_url))
+			past_urls.append(str(temp_url))
+			
+	observation.append(clean_html(str(article.find("h2")))) #Post title
+	observation.append(clean_html(str(article.find("span", attrs={"class": "count-bubble"})))) #Number of comments
+	csvwriter.writerow(observation)
+	
 readFile.close()
